@@ -1,0 +1,34 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "advent_of_code_2021"
+version = "0.1.0"
+description = "Code for AOC 2021"
+authors = ["Tom Fleet <tomfleet2018@gmail.com>"]
+license = "MIT"
+homepage = "https://github.com/FollowTheProcess/advent_of_code_2021"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+black = ">=21.8b0"
+mypy = ">=0.910"
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+files = "aoc/**/*.py"
+ignore_missing_imports = true
+strict = true
+pretty = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_errors = true
