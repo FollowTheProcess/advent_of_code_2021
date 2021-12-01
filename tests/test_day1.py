@@ -1,4 +1,4 @@
-from src.day1.day1 import number_of_grouped_increases, number_of_increases
+from src.day01.day01 import number_of_grouped_increases, number_of_increases
 
 
 def test_part1():

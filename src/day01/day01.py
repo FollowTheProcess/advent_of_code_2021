@@ -137,7 +137,7 @@ def number_of_grouped_increases(readings: list[int], group_size: int = 3) -> int
 
 if __name__ == "__main__":
     HERE = Path(__file__).parent.resolve()
-    INPUT = HERE / "day1.txt"
+    INPUT = HERE / "day01.txt"
 
     with open(INPUT) as f:
         readings_text = f.read()
