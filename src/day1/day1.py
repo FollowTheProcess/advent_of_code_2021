@@ -127,7 +127,9 @@ def number_of_grouped_increases(readings: list[int], group_size: int = 3) -> int
     grouped_sums: list[int] = []
     for i in range(len(readings)):
         group = readings[i : i + group_size]
-        grouped_sums.append(sum(group))
+        if len(group) == 3:
+            # If we have a fully populated group
+            grouped_sums.append(sum(group))
 
     # Now can just feed the sum list into `number_of_increases`
     return number_of_increases(grouped_sums)
