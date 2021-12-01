@@ -1,5 +1,5 @@
 ROOT := justfile_directory()
-SRC := join(ROOT, "aoc")
+SRC := join(ROOT, "src")
 TESTS := join(ROOT, "tests")
 
 # By default, print the list of recipes

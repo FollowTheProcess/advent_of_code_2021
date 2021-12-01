@@ -24,7 +24,7 @@ mypy = ">=0.910"
 profile = "black"
 
 [tool.mypy]
-files = "aoc/**/*.py"
+files = "src/**/*.py"
 ignore_missing_imports = true
 strict = true
 pretty = true
