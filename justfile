@@ -19,7 +19,7 @@ fmt:
     black .
 
 # Lint all source code
-lint:
+lint: fmt
     flake8 .
     isort .
     mypy
