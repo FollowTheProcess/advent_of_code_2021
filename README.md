@@ -1,8 +1,5 @@
 # Advent of Code 2021 - Python
 
-This is the repo for my [Advent of Code] 2021 code (python edition) 🤓
-
-This year I'm doing it in both python (here) and [Go]
+This is the repo for my [Advent of Code] 2021 code
 
 [Advent of Code]: https://adventofcode.com
-[Go]: https://github.com/FollowTheProcess/aocgo
