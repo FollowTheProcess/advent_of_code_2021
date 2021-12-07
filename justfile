@@ -16,12 +16,12 @@ test:
 
 # Format all source code with black
 fmt:
-    black .
+    black {{ ROOT }}
 
 # Lint all source code
 lint: fmt
-    flake8 .
-    isort .
+    flake8 {{ ROOT }}
+    isort {{ ROOT }}
     mypy
 
 # Run tests and linting in one go
@@ -29,11 +29,11 @@ check: lint test
 
 # Create a new day folder and its tests
 new day:
-    mkdir -p src/{{ day }}
-    touch src/{{ day }}/__init__.py
-    touch src/{{ day }}/{{ day }}.py
-    touch src/{{ day }}/{{ day }}.txt
-    touch tests/test_{{ day }}.py
+    mkdir -p {{ SRC }}/{{ day }}
+    touch {{ SRC }}/{{ day }}/__init__.py
+    touch {{ SRC }}/{{ day }}/{{ day }}.py
+    touch {{ SRC }}/{{ day }}/{{ day }}.txt
+    touch {{ TESTS }}/test_{{ day }}.py
 
 # Create a virtualenv and install dependencies
 install:
