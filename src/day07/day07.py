@@ -133,3 +133,5 @@ if __name__ == "__main__":
         positions = [int(n) for n in f.read().strip().split(",")]
 
         print(f"Part 1: {find_cheapest_fuel_use(positions)}")
+
+        print(f"Part 2: {find_cheapest_fuel_use_part_2(positions)}")
