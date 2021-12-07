@@ -27,6 +27,14 @@ lint: fmt
 # Run tests and linting in one go
 check: lint test
 
+# Create a new day folder and its tests
+new day:
+    mkdir -p src/{{ day }}
+    touch src/{{ day }}/__init__.py
+    touch src/{{ day }}/{{ day }}.py
+    touch src/{{ day }}/{{ day }}.txt
+    touch tests/test_{{ day }}.py
+
 # Create a virtualenv and install dependencies
 install:
     poetry install
