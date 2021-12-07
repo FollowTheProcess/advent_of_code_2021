@@ -96,31 +96,33 @@ def find_cheapest_fuel_use(positions: list[int]) -> int:
     Returns:
         int: Fuel usage.
     """
-    unique_positions = set(positions)
+    positions = sorted(positions)
+    median = positions[len(positions) // 2]
+    answer = 0
 
-    fuel_used: list[int] = []
+    for position in positions:
+        answer += abs(position - median)
 
-    for position in unique_positions:
-        distance_to_position = [abs(position - item) for item in positions]
-        sum_of_distances = sum(distance_to_position)
-        fuel_used.append(sum_of_distances * FUEL_PER_MOVE)
-
-    return min(fuel_used)
+    return answer
 
 
-def find_cheapest_fuel_use_part2(positions: list[int]) -> int:
-    """
-    Returns the amount of fuel used for the cheapest
-    alignment position. Now with an increasing fuel burn
-    rate.
+def find_cheapest_fuel_use_part_2(positions: list[int]) -> float:
+    positions = sorted(positions)
 
-    Args:
-        positions (list[int]): The list of starting positions.
+    best = 1e9
 
-    Returns:
-        int: Fuel usage.
-    """
-    return 168
+    rng = max(positions) - min(positions)
+
+    for i in range(rng):
+        score = 0.0
+        for position in positions:
+            diff = abs(position - i)
+            score += diff * (diff + 1) / 2
+
+        if score < best:
+            best = score
+
+    return best
 
 
 if __name__ == "__main__":
