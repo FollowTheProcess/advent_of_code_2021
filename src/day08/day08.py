@@ -87,7 +87,68 @@ of signals correspond to those digits. Counting only digits in the output values
 in the above example, there are 26 instances of digits that use a unique number of segments (highlighted above).
 
 In the output values, how many times do digits 1, 4, 7, or 8 appear?
+
+Part 2
+------
+
+Through a little deduction, you should now be able to determine the remaining digits.
+
+Consider again the first example above:
+
+acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf
+
+After some careful analysis, the mapping between signal wires and segments only make
+sense in the following configuration:
+
+ dddd
+e    a
+e    a
+ ffff
+g    b
+g    b
+ cccc
+
+So, the unique signal patterns would correspond to the following digits:
+
+acedgfb: 8
+cdfbe: 5
+gcdfa: 2
+fbcad: 3
+dab: 7
+cefabd: 9
+cdfgeb: 6
+eafb: 4
+cagedb: 0
+ab: 1
+Then, the four digits of the output value can be decoded:
+
+cdfeb: 5
+fcadb: 3
+cdfeb: 5
+cdbaf: 3
+Therefore, the output value for this entry is 5353.
+
+Following this same process for each entry in the second, larger example above,
+the output value of each entry can be determined:
+
+fdgacbe cefdb cefbgd gcbe: 8394
+fcgedb cgb dgebacf gc: 9781
+cg cg fdcagb cbg: 1197
+efabcd cedba gadfec cb: 9361
+gecf egdcabf bgf bfgea: 4873
+gebdcfa ecba ca fadegcb: 8418
+cefg dcbef fcge gbcadfe: 4548
+ed bcgafe cdgba cbgef: 1625
+gbdfcae bgc cg cgb: 8717
+fgae cfgab fg bagce: 4315
+
+Adding all of the output values in this larger example produces 61229.
+
+For each entry, determine all of the wire/segment connections and decode the four-digit output values.
+
+What do you get if you add up all of the output values?
 """
+
 
 from pathlib import Path
 
@@ -97,17 +158,31 @@ from pathlib import Path
 # required to display it
 ALL_SEGMENTS = len("abcdefg")
 DIGITS = {
-    0: len("abcefg"),
-    1: len("cf"),
-    2: len("acdeg"),
-    3: len("acdfg"),
-    4: len("bcdf"),
-    5: len("abdfg"),
-    6: len("abdefg"),
-    7: len("acf"),
-    8: len("abcdefg"),
-    9: len("abcdfg"),
+    0: "abcefg",
+    1: "cf",
+    2: "acdeg",
+    3: "acdfg",
+    4: "bcdf",
+    5: "abdfg",
+    6: "abdefg",
+    7: "acf",
+    8: "abcdefg",
+    9: "abcdfg",
 }
+
+
+def get_unique_counts(blocks: list[str]) -> int:
+    """
+    Gets the total number of unique length digits (1, 4, 7, 8)
+    from a list of output `blocks`.
+    """
+    uniques = {len(DIGITS[i]) for i in (1, 4, 7, 8)}
+    count = 0
+    for block in blocks:
+        if len(block) in uniques:
+            count += 1
+
+    return count
 
 
 if __name__ == "__main__":
@@ -115,4 +190,12 @@ if __name__ == "__main__":
     INPUT = HERE / "day08.txt"
 
     with open(INPUT) as f:
-        input_text = f.read()
+        lines = f.read().splitlines()
+
+    blocks: list[str] = []
+    for line in lines:
+        output = line.split(" | ")[-1]
+        output_blocks = output.strip().split(" ")
+        blocks.extend([b for b in output_blocks])
+
+    print(f"Part 1: {get_unique_counts(blocks)}")

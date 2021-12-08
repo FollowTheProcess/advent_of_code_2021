@@ -1,6 +1,48 @@
-from src.day08.day08 import ALL_SEGMENTS, DIGITS
+from src.day08.day08 import get_unique_counts
 
 
-def test_constants():
-    assert ALL_SEGMENTS == 7
-    assert DIGITS == {0: 6, 1: 2, 2: 5, 3: 5, 4: 4, 5: 5, 6: 6, 7: 3, 8: 7, 9: 6}
+def test_example_part_1():
+    blocks = [
+        "fdgacbe",
+        "cefdb",
+        "cefbgd",
+        "gcbe",
+        "fcgedb",
+        "cgb",
+        "dgebacf",
+        "gc",
+        "cg",
+        "cg",
+        "fdcagb",
+        "cbg",
+        "efabcd",
+        "cedba",
+        "gadfec",
+        "cb",
+        "gecf",
+        "egdcabf",
+        "bgf",
+        "bfgea",
+        "gebdcfa",
+        "ecba",
+        "ca",
+        "fadegcb",
+        "cefg",
+        "dcbef",
+        "fcge",
+        "gbcadfe",
+        "ed",
+        "bcgafe",
+        "cdgba",
+        "cbgef",
+        "gbdfcae",
+        "bgc",
+        "cg",
+        "cgb",
+        "fgae",
+        "cfgab",
+        "fg",
+        "bagce",
+    ]
+
+    assert get_unique_counts(blocks) == 26
