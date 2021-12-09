@@ -150,13 +150,9 @@ What do you get if you add up all of the output values?
 """
 
 
+from collections import Counter
 from pathlib import Path
 
-# Map of the digits to what segments are required to show them
-# Because each connection is random and each digit in a display is random
-# we don't actually care about which characters, just the number of segments
-# required to display it
-ALL_SEGMENTS = len("abcdefg")
 DIGITS = {
     0: "abcefg",
     1: "cf",
@@ -170,19 +166,91 @@ DIGITS = {
     9: "abcdfg",
 }
 
+# Mapping of the number to the number of segments needed to display it
+LENGTHS = {
+    0: 6,
+    1: 2,
+    2: 5,
+    3: 5,
+    4: 4,
+    5: 5,
+    6: 6,
+    7: 3,
+    8: 7,
+    9: 6,
+}
+
 
 def get_unique_counts(blocks: list[str]) -> int:
     """
     Gets the total number of unique length digits (1, 4, 7, 8)
     from a list of output `blocks`.
     """
-    uniques = {len(DIGITS[i]) for i in (1, 4, 7, 8)}
-    count = 0
-    for block in blocks:
-        if len(block) in uniques:
-            count += 1
+    return sum(
+        len(digit) in (LENGTHS[1], LENGTHS[4], LENGTHS[7], LENGTHS[8])
+        for digit in blocks
+    )
 
-    return count
+
+def wires_to_int(wires: str) -> str:
+    return {
+        "abcefg": "0",
+        "cf": "1",
+        "acdeg": "2",
+        "acdfg": "3",
+        "bcdf": "4",
+        "abdfg": "5",
+        "abdefg": "6",
+        "acf": "7",
+        "abcdefg": "8",
+        "abcdfg": "9",
+    }[wires]
+
+
+def decode(raw: str) -> int:
+    digits = raw.split(" | ")[0].split()
+    counts = Counter(c for digit in digits for c in digit)
+    mapping = {}
+    for wire in "abcdefg":
+        if counts[wire] == 4:
+            mapping[wire] = "e"
+        elif counts[wire] == 6:
+            mapping[wire] = "b"
+        elif counts[wire] == 9:
+            mapping[wire] = "f"
+
+    remaining = [wire for wire in "abcdefg" if wire not in mapping]
+
+    # find c, by finding 1
+    one = next(d for d in digits if len(d) == 2)
+    c = next(ch for ch in one if ch in remaining)
+    mapping[c] = "c"
+    remaining.remove(c)
+
+    # find a, only one remaining that appears 8 times
+    a = next(ch for ch in remaining if counts[ch] == 8)
+    mapping[a] = "a"
+    remaining.remove(a)
+
+    # find d by looking for the four
+    four = next(d for d in digits if len(d) == 4)
+    d = next(ch for ch in remaining if ch in four)
+    mapping[d] = "d"
+    remaining.remove(d)
+
+    # g is the only one left
+    (g,) = remaining
+    mapping[g] = "g"
+
+    raw_number = raw.split(" | ")[-1].split()
+
+    def remap(digit: str) -> str:
+        wires = "".join(sorted(mapping[ch] for ch in digit))
+        return wires_to_int(wires)
+
+    value = int("".join(remap(digit) for digit in raw_number))
+
+    return value
 
 
 if __name__ == "__main__":
@@ -190,12 +258,16 @@ if __name__ == "__main__":
     INPUT = HERE / "day08.txt"
 
     with open(INPUT) as f:
-        lines = f.read().splitlines()
+        raw = f.read()
+        lines = raw.splitlines()
 
     blocks: list[str] = []
     for line in lines:
         output = line.split(" | ")[-1]
+        digits = line.split(" | ")[0]
         output_blocks = output.strip().split(" ")
         blocks.extend([b for b in output_blocks])
 
     print(f"Part 1: {get_unique_counts(blocks)}")
+    print()
+    print(f"Part 2: {sum(decode(line) for line in lines)}")
