@@ -29,9 +29,13 @@ lint: fmt
 # Run tests and linting in one go
 check: lint test
 
-# Create a new day folder and its tests
+# Create a new day (int) folder and its tests
 new day:
     python scripts/new.py {{ day }}
+
+# Run a day's (int) code
+run day:
+    python scripts/run.py {{ day }}
 
 # Create a virtualenv and install dependencies
 install:

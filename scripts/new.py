@@ -1,10 +1,14 @@
 """
 Helper script that sets up a new days directories and files
 and gets the puzzle input.
+
+Expects a .env file in the project root with:
+AOC_SESSION=<session_cookie>
 """
 
 import argparse
 import os
+from datetime import datetime
 from pathlib import Path
 
 import httpx
@@ -75,10 +79,19 @@ if __name__ == "__main__":
     if not session:
         raise ValueError("missing session cookie")
 
-    parser = argparse.ArgumentParser(description="Set up an advent of code puzzle")
+    parser = argparse.ArgumentParser(description="Set up an advent of code puzzle.")
     parser.add_argument("day", type=int, nargs=1, help="The day of AOC to set up for.")
     args: argparse.Namespace = parser.parse_args()
     day: int = args.day.pop()
+
+    if day not in DAYS:
+        raise ValueError(f"{day} is not a valid day")
+
+    today = datetime.now().day
+    if day > today:
+        raise ValueError(
+            f"{day} December hasn't happened yet, get your time machine out!"
+        )
 
     print(f"Setting up for day: {day}")
 
