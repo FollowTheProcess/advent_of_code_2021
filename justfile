@@ -2,6 +2,8 @@ ROOT := justfile_directory()
 SRC := join(ROOT, "src")
 TESTS := join(ROOT, "tests")
 
+set dotenv-load := true
+
 # By default, print the list of recipes
 _default:
     @just --list
@@ -29,11 +31,7 @@ check: lint test
 
 # Create a new day folder and its tests
 new day:
-    mkdir -p {{ SRC }}/{{ day }}
-    touch {{ SRC }}/{{ day }}/__init__.py
-    touch {{ SRC }}/{{ day }}/{{ day }}.py
-    touch {{ SRC }}/{{ day }}/{{ day }}.txt
-    touch {{ TESTS }}/test_{{ day }}.py
+    python scripts/new.py {{ day }}
 
 # Create a virtualenv and install dependencies
 install:

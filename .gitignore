@@ -114,3 +114,6 @@ docs/site
 # IDE settings
 .vscode/
 .idea/
+
+# Scripts
+!scripts/

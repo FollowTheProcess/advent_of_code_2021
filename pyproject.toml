@@ -12,6 +12,8 @@ homepage = "https://github.com/FollowTheProcess/advent_of_code_2021"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+httpx = "^0.21.1"
+python-dotenv = "^0.19.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
