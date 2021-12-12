@@ -13,8 +13,8 @@ show:
     @just --evaluate
 
 # Run the tests
-test:
-    pytest {{ TESTS }}
+test *flags:
+    pytest --doctest-modules {{ flags }}
 
 # Format all source code with black
 fmt:

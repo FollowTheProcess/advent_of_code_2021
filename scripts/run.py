@@ -22,10 +22,7 @@ if __name__ == "__main__":
     if day not in DAYS:
         raise ValueError(f"{day} is not a valid day.")
 
-    if day < 10:
-        day_str = f"day0{day}"
-    else:
-        day_str = f"day{day}"
+    day_str = f"day{day:02d}"
 
     file = SRC / day_str / f"{day_str}.py"
 

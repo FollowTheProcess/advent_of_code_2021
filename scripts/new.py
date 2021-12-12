@@ -49,10 +49,7 @@ def setup(root: Path, day: int, session: str) -> None:
     tests = root / "tests"
 
     # Create a new folder called dayXX under src
-    if day < 10:
-        day_str = f"day0{day}"
-    else:
-        day_str = f"day{day}"
+    day_str = f"day{day:02d}"
 
     day_x = src / day_str
     day_x.mkdir()

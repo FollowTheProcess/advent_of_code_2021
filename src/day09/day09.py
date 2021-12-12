@@ -104,7 +104,7 @@ class Map:
     def max_cols(self) -> int:
         return len(self.squares[0])
 
-    def get(self, point: "Point") -> int:
+    def get(self, point: Point) -> int:
         """
         Gets the value stored at `point`.
         """
@@ -127,7 +127,7 @@ class Map:
 
         return Map(squares)
 
-    def get_lowpoints(self) -> list["Point"]:
+    def get_lowpoints(self) -> list[Point]:
         """
         Iterates through the map and returns all the lowpoints.
         """
@@ -140,7 +140,7 @@ class Map:
 
         return lows
 
-    def get_basins(self) -> list[list["Point"]]:
+    def get_basins(self) -> list[list[Point]]:
         """
         Iterates through the map and returns a list of
         all the basins (defined as a list of `Point` that make up
@@ -150,7 +150,7 @@ class Map:
         # Iterate through each low point's neighbours, if their value
         # is higher, we're going "uphill" and are therefore still in
         # the basin
-        basins: list[list["Point"]] = []
+        basins: list[list[Point]] = []
         for low in self.get_lowpoints():
             # basin is the basin we're currently in, initialised
             # with the starting low point
