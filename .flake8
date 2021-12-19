@@ -14,7 +14,7 @@ exclude =
     build,
     dist,
 max-complexity = 15
-max-line-length = 120
+max-line-length = 140
 extend-ignore =
     E203, # Black compatability: whitespace before :
     W503, # Black compatability: line break before binary operator
